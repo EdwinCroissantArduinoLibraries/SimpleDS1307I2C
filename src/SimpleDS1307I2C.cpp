@@ -36,7 +36,7 @@ bool SimpleDS1307I2C::readClock() {
 	uint8_t temp;
 	I2c.read(I2Caddr, RegStart, 8);
 	temp = I2c.receive();
-	if (temp > 0xEF) // bit 7 set, clock halted
+	if (bitRead(temp,7)) // bit 7 set, clock halted
 		return false;
 	second = (temp & 0x0F) + ((temp >> 4) * 10);
 	temp = I2c.receive();
