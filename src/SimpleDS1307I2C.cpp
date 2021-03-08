@@ -54,17 +54,17 @@ bool SimpleDS1307I2C::readClock() {
 }
 
 void SimpleDS1307I2C::setClock() {
-	I2c.start();
-	I2c.sendAddress(SLA_W(I2Caddr));
-	I2c.sendByte(RegStart);
-	I2c.sendByte(((second % 10) | ((second / 10) << 4)) & 0x7F);
-	I2c.sendByte(((minute % 10) | ((minute / 10) << 4)) & 0x7F);
-	I2c.sendByte(((hour % 10) | ((hour / 10) << 4)) & 0x3F); // force 24h mode
-	I2c.sendByte(1);
-	I2c.sendByte(((day % 10) | ((day / 10) << 4)) & 0x3F);
-	I2c.sendByte(((month % 10) | ((month / 10) << 4)) & 0x1F);
-	I2c.sendByte((year % 10) | ((year / 10) << 4));
-	I2c.stop();
+	I2c._start();
+	I2c._sendAddress(SLA_W(I2Caddr));
+	I2c._sendByte(RegStart);
+	I2c._sendByte(((second % 10) | ((second / 10) << 4)) & 0x7F);
+	I2c._sendByte(((minute % 10) | ((minute / 10) << 4)) & 0x7F);
+	I2c._sendByte(((hour % 10) | ((hour / 10) << 4)) & 0x3F); // force 24h mode
+	I2c._sendByte(1);
+	I2c._sendByte(((day % 10) | ((day / 10) << 4)) & 0x3F);
+	I2c._sendByte(((month % 10) | ((month / 10) << 4)) & 0x1F);
+	I2c._sendByte((year % 10) | ((year / 10) << 4));
+	I2c._stop();
 }
 
 void SimpleDS1307I2C::writeRam(uint8_t memLoc, uint8_t* source,
@@ -78,13 +78,13 @@ void SimpleDS1307I2C::readRam(uint8_t memLoc, uint8_t quantity,
 }
 
 void SimpleDS1307I2C::clearRam() {
-	I2c.start();
-	I2c.sendAddress(SLA_W(I2Caddr));
-	I2c.sendByte(RamStart);
+	I2c._start();
+	I2c._sendAddress(SLA_W(I2Caddr));
+	I2c._sendByte(RamStart);
 	for (int i = 0; i < RamSize; ++i) {
-		I2c.sendByte(0);
+		I2c._sendByte(0);
 	};
-	I2c.stop();
+	I2c._stop();
 }
 
 SimpleDS1307I2C rtc = SimpleDS1307I2C();
